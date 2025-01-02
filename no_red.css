@@ -1,0 +1,5 @@
+.panel__body {
+  --input-text-border-error: 1px solid #606060;
+  --label-fg-error: #606060;
+  --select-border-error: 1px solid #606060;
+}
