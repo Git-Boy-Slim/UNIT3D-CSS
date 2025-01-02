@@ -1,7 +1,3 @@
-.form__text:invalid:focus, .form__text:user-invalid {
-    border: #606060;
-}
-
-.form {
-    border: var(--input-text-border);
+.form__select:invalid:focus,.form__select:user-invalid {
+    /* border:var(--select-border-error); */
 }
