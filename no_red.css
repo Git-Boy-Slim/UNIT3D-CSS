@@ -1,3 +1,7 @@
 .form__text:invalid:focus, .form__text:user-invalid {
     border: #606060;
 }
+
+.form {
+    border: var(--input-text-border);
+}
