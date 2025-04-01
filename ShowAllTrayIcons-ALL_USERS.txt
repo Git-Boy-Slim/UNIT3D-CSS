@@ -1,0 +1,9 @@
+Einfach das Script unter 
+
+    C:\Windows\Setup\Scripts 
+
+ablegen und Verknüpfung zu 
+
+    C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
+
+hinzufügen.
