@@ -1,5 +1,7 @@
 reg load HKLM\Default "C:\Users\Default\NTUSER.DAT"
-reg add HKLM\Default\Software\Microsoft\Windows\CurrentVersion\Search /v SearchBoxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+reg add HKLM\Default\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+reg add HKLM\Default\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarModeCache /t REG_DWORD /d 0x00000001 /f
 reg unload HKLM\Default
 
-reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /v SearchBoxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarModeCache /t REG_DWORD /d 0x00000001 /f
