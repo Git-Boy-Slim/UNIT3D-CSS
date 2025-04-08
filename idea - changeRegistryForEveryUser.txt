@@ -1,0 +1,33 @@
+for /f "tokens=*" %F IN ('DIR C:\Users /AD-S /B') do 
+    => gibt alle Verzeichnisse im User Ordner aus (ohne Pfad, weil einfach nur die DIR ausgabe durch die Schleife läuft)
+
+@(if exist C:\Users\%F\NTUSER.DAT @echo C:\Users\%F\NTUSER.DAT)
+    => checkt ob es die NTUSER.DAT im jeweiligen Ordner gibt (trifft für "Public" nicht zu) und echot den Pfad
+        ==> anstatt des echos kann jetzt auch die reg load / reg unload Befehlskettte durchlaufen
+
+Komplettes Command:
+
+for /f "tokens=*" %F IN ('DIR C:\Users /AD-S /B') do @(if exist C:\Users\%F\NTUSER.DAT @echo C:\Users\%F\NTUSER.DAT)
+C:\Users\08634\NTUSER.DAT
+C:\Users\6000755\NTUSER.DAT
+C:\Users\adm-fabian.danders\NTUSER.DAT
+C:\Users\Admin\NTUSER.DAT
+C:\Users\Default\NTUSER.DAT
+C:\Users\fabian.danders\NTUSER.DAT
+C:\Users\jlo\NTUSER.DAT
+
+.bat idee für den baramunndi Job:
+(!!! in einer BAT muss anstatt %F -> %%F geschrieben werden)
+
+for /f "tokens=*" %%F IN ('DIR C:\Users /AD-S /B') do @(
+    if exist C:\Users\%%F\NTUSER.DAT (
+        reg load HKLM\baramundi "C:\Users\%%F\NTUSER.DAT"
+        reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v TaskbarAl /t REG_DWORD /d 0x00000000 /f
+        reg unload HKLM\baramundi
+    )
+)
+
+cmd One Liner:
+(&& -> das vorherige command muss erfolgreich beendet worden sein)
+(& -> es ist egal mit welchem status das vorherige Command beendet wurde)
+for /f "tokens=*" %F IN ('DIR C:\Users /AD-S /B') do @(if exist C:\Users\%F\NTUSER.DAT (reg load HKLM\baramundi "C:\Users\%F\NTUSER.DAT" && reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v TaskbarAl /t REG_DWORD /d 0x00000000 /f & reg unload HKLM\baramundi) )
