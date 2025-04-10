@@ -40,8 +40,10 @@ reg unload HKLM\baramundi
 ########################################################################################################################
 ########################################################################################################################
 
+https://www.ntlite.com/community/index.php?threads/search-box-taskbar-on-windows-11-build-22621-1344.3440/
+
 You have two choices:
-Post-Setup (Machine) -> reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v SearchOnTaskbarMode /t REG_DWORD /d 1
-Post-Setup (User) -> reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 1
+Post-Setup (Machine) -> reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v SearchOnTaskbarMode /t REG_DWORD /d 0
+Post-Setup (User) -> reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 0
 
 SearchboxTaskbarMode must be set during your first logon, to work.
