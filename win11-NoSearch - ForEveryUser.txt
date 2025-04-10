@@ -1,0 +1,47 @@
+########################################################################################################################
+.bat (!!! in einer BAT muss anstatt %F -> %%F geschrieben werden)
+########################################################################################################################
+
+for /f "tokens=*" %%F IN ('DIR C:\Users /AD-S /B') do @(
+    if exist C:\Users\%%F\NTUSER.DAT (
+        reg load HKLM\baramundi "C:\Users\%%F\NTUSER.DAT"
+        reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+        reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarModeCache /t REG_DWORD /d 0x00000001 /f
+        reg unload HKLM\baramundi
+    )
+)
+
+
+
+########################################################################################################################
+cmd One Liner:
+(&& -> das vorherige command muss erfolgreich beendet worden sein)
+(& -> es ist egal mit welchem status das vorherige Command beendet wurde)
+########################################################################################################################
+
+for /f "tokens=*" %F IN ('DIR C:\Users /AD-S /B') do @( ^
+    if exist C:\Users\%F\NTUSER.DAT ( ^
+        reg load HKLM\baramundi "C:\Users\%%F\NTUSER.DAT" && ^
+        reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0 /f && ^
+        reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarModeCache /t REG_DWORD /d 1 /f & ^
+        reg unload HKLM\baramundi ) )
+
+
+
+########################################################################################################################
+baramundi automation studio cmd:
+########################################################################################################################
+
+reg load HKLM\baramundi "{NTU.{i}.Name}"
+reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarMode /t REG_DWORD /d 0x00000000 /f
+reg add HKLM\baramundi\Software\Microsoft\Windows\CurrentVersion\Search /v SearchboxTaskbarModeCache /t REG_DWORD /d 0x00000001 /f
+reg unload HKLM\baramundi
+
+########################################################################################################################
+########################################################################################################################
+
+You have two choices:
+Post-Setup (Machine) -> reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v SearchOnTaskbarMode /t REG_DWORD /d 1
+Post-Setup (User) -> reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v SearchboxTaskbarMode /t REG_DWORD /d 1
+
+SearchboxTaskbarMode must be set during your first logon, to work.
